@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "sagaringale03/kafka"
-        COMMIT_ID = '' // initialize
     }
     stages {
         stage('Checkout Code') {
@@ -25,7 +24,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image with tags: latest and ${env.COMMIT_ID}..."
-                sh "docker build -t $DOCKER_IMAGE:latest -t $DOCKER_IMAGE:${env.COMMIT_ID} ./kubernates"
+                // change '.' if Dockerfile is in a subfolder
+                sh "docker build -t $DOCKER_IMAGE:latest -t $DOCKER_IMAGE:${env.COMMIT_ID} ."
             }
         }
 
