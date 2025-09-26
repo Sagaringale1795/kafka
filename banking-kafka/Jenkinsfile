@@ -21,12 +21,13 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                echo "Building Docker image with tags: latest and ${env.COMMIT_ID}..."
-                // change '.' if Dockerfile is in a subfolder
-                sh "docker build -t $DOCKER_IMAGE:latest -t $DOCKER_IMAGE:${env.COMMIT_ID} ."
-            }
+       stage('Build Docker Image') {
+    steps {
+        echo "Building Docker image with tags: latest and ${env.COMMIT_ID}..."
+        sh "docker build -f banking-kafka/Dockerfile -t $DOCKER_IMAGE:latest -t $DOCKER_IMAGE:${env.COMMIT_ID} ./banking-kafka"
+    }
+}
+
         }
 
         stage('Push Docker Image') {
